@@ -1,6 +1,8 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using dotnet_boilerplate.Models;
 using dotnet_boilerplate.Interfaces;
+using dotnet_boilerplate.ViewModels;
 
 namespace dotnet_boilerplate.Controllers;
 
@@ -8,10 +10,12 @@ namespace dotnet_boilerplate.Controllers;
 [ApiController]
 public class DeviceController : ControllerBase
 {
-    private IRepository<Device> _deviceRepository;
-
-    public DeviceController(IRepository<Device> deviceRepository)
+    private readonly IRepository<Device> _deviceRepository;
+    private readonly IMapper _mapper;
+    
+    public DeviceController(IMapper mapper, IRepository<Device> deviceRepository)
     {
+        _mapper = mapper;
         _deviceRepository = deviceRepository;
     }
 
@@ -19,26 +23,24 @@ public class DeviceController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Device>>> GetDevice()
     {
-        return Ok(await _deviceRepository.GetAllAsync());
+        var devices = await _deviceRepository.GetAllAsync();
+        var result = _mapper.Map<IEnumerable<DeviceViewModel>>(devices);
+        return Ok(result);
     }
-
-    // // GET: api/Device/5
-    // [HttpGet("{id}")]
-    // public async Task<ActionResult<Device>> GetDevice(Guid id)
-    // {
-    //     if (_context.Device == null)
-    //     {
-    //         return NotFound();
-    //     }
-    //     var device = await _context.Device.FindAsync(id);
-
-    //     if (device == null)
-    //     {
-    //         return NotFound();
-    //     }
-
-    //     return device;
-    // }
+    
+    // GET: api/Device/5
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Device>> GetDevice(Guid id)
+    {
+        var device = await _deviceRepository.GetByIdAsync(id);
+        
+        if (device == null)
+        {
+            return NotFound();
+        }
+        
+        return device;
+    }
 
     // // PUT: api/Device/5
     // // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
@@ -74,10 +76,13 @@ public class DeviceController : ControllerBase
     // POST: api/Device
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPost]
-    public async Task<ActionResult<Device>> PostDevice(Device device)
+    public async Task<ActionResult<DeviceViewModel>> PostDevice(CreateDeviceViewModel device)
     {
-        _deviceRepository.Add(device);
-        return Ok(await _deviceRepository.SaveChangesAsync());
+        var newDevice = _mapper.Map<Device>(device);
+        _deviceRepository.Add(newDevice);
+        await _deviceRepository.SaveChangesAsync();
+        var result = _mapper.Map<DeviceViewModel>(newDevice);
+        return Ok(result);
     }
 
     // // DELETE: api/Device/5

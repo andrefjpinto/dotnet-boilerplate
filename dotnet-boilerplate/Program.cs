@@ -5,7 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ApplicationContext>(options =>
-    options.UseNpgsql("Host=localhost;Database=postgres;Username=postgres;Password=mysecretpassword"));
+    options.UseNpgsql("Host=localhost;Database=postgres;Username=admin;Password=mysecretpassword"));
+
+builder.Services.AddAutoMapper(typeof(Program).Assembly); 
 
 // Add services to the container.
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));

@@ -4,5 +4,4 @@ public class Device : BaseEntity
 {
     public string? Name { get; set; }
     public string? Brand { get; set; }
-    
 }
