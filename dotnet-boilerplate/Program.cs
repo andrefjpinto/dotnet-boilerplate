@@ -1,6 +1,14 @@
+using dotnet_boilerplate.Data;
+using dotnet_boilerplate.Interfaces;
+using dotnet_boilerplate.Repositories;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<ApplicationContext>(options =>
+    options.UseNpgsql("Host=localhost;Database=postgres;Username=postgres;Password=mysecretpassword"));
 
 // Add services to the container.
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
