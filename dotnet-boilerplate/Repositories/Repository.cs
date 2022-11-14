@@ -22,7 +22,7 @@ public class Repository<T> : IRepository<T> where T : BaseEntity
         return await _entities.ToListAsync();
     }
 
-    public async Task<T> GetByIdAsync(Guid id)
+    public async Task<T?> GetByIdAsync(Guid id)
     {
         return await _entities.SingleOrDefaultAsync(s => s.Id.Equals(id));
     }
@@ -36,9 +36,9 @@ public class Repository<T> : IRepository<T> where T : BaseEntity
     {
         return await _context.SaveChangesAsync().ConfigureAwait(false) > 0;
     }
-
-    public async Task<T> FindByConditionAsync(Expression<Func<T, bool>> predicate)
-    {
-        return await _context.Set<T>().FirstOrDefaultAsync(predicate);
-    }
+    
+    public void Delete(T entity) => _context.Set<T>().Remove(entity);
+    
+    public IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression) => 
+        _context.Set<T>().Where(expression).AsNoTracking();
 }

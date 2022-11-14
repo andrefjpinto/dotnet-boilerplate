@@ -21,9 +21,19 @@ public class DeviceController : ControllerBase
 
     // GET: api/Device
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Device>>> GetDevice()
+    public async Task<ActionResult<IEnumerable<Device>>> GetDevice([FromQuery(Name = "brand")] string? brand)
     {
-        var devices = await _deviceRepository.GetAllAsync();
+        IEnumerable<Device> devices;
+        
+        if (brand != null)
+        {
+            devices = _deviceRepository.FindByCondition(x => x.Brand!.Equals((brand)));
+        }
+        else
+        { 
+            devices = await _deviceRepository.GetAllAsync();
+        }
+
         var result = _mapper.Map<IEnumerable<DeviceViewModel>>(devices);
         return Ok(result);
     }
@@ -85,28 +95,17 @@ public class DeviceController : ControllerBase
         return Ok(result);
     }
 
-    // // DELETE: api/Device/5
-    // [HttpDelete("{id}")]
-    // public async Task<IActionResult> DeleteDevice(Guid id)
-    // {
-    //     if (_context.Device == null)
-    //     {
-    //         return NotFound();
-    //     }
-    //     var device = await _context.Device.FindAsync(id);
-    //     if (device == null)
-    //     {
-    //         return NotFound();
-    //     }
+    // DELETE: api/Device/5
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteDevice(Guid id)
+    {
+        var device = await _deviceRepository.GetByIdAsync(id);
+        
+        if (device == null) return BadRequest();
 
-    //     _context.Device.Remove(device);
-    //     await _context.SaveChangesAsync();
+        _deviceRepository.Delete(device);
+        await _deviceRepository.SaveChangesAsync();
 
-    //     return NoContent();
-    // }
-
-    // private bool DeviceExists(Guid id)
-    // {
-    //     return (_context.Device?.Any(e => e.Id == id)).GetValueOrDefault();
-    // }
+        return NoContent();
+    }
 }
