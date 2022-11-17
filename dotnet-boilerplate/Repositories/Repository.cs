@@ -17,28 +17,12 @@ public class Repository<T> : IRepository<T> where T : BaseEntity
         _entities = context.Set<T>();
     }
 
-    public async Task<IEnumerable<T>> GetAllAsync()
-    {
-        return await _entities.ToListAsync();
-    }
-
-    public async Task<T?> GetByIdAsync(Guid id)
-    {
-        return await _entities.SingleOrDefaultAsync(s => s.Id.Equals(id));
-    }
-
-    public void Add(T entity)
-    {
-        _entities.Add(entity);
-    }
-
-    public async Task<bool> SaveChangesAsync()
-    {
-        return await _context.SaveChangesAsync().ConfigureAwait(false) > 0;
-    }
-    
+    public async Task<IEnumerable<T>> FindAllAsync() => await _entities.ToListAsync();
+    public async Task<IEnumerable<T>> FindByConditionAsync(Expression<Func<T, bool>> expression) =>
+        await _entities.Where(expression).AsNoTracking().ToListAsync();
+    public void Create(T entity) => _entities.Add(entity);
+    public void Update(T entity) => _entities.Update(entity);
     public void Delete(T entity) => _context.Set<T>().Remove(entity);
-    
-    public IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression) => 
-        _context.Set<T>().Where(expression).AsNoTracking();
+    public async Task<bool> SaveChangesAsync() => 
+        (await _context.SaveChangesAsync().ConfigureAwait(false)) > 0;
 }

@@ -5,10 +5,10 @@ namespace dotnet_boilerplate.Interfaces;
 
 public interface IRepository<T> where T : BaseEntity
 {
-   Task<IEnumerable<T>> GetAllAsync();
-   Task<T?> GetByIdAsync(Guid id);
-   void Add(T entity);
-   Task<bool> SaveChangesAsync();
-   IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression);
-   void Delete(T entity);
+    Task<IEnumerable<T>> FindAllAsync();
+    Task<IEnumerable<T>> FindByConditionAsync(Expression<Func<T, bool>> expression);
+    void Create(T entity);
+    void Update(T entity);
+    void Delete(T entity);
+    Task<bool> SaveChangesAsync();
 }

@@ -1,4 +1,3 @@
-
 namespace dotnet_boilerplate.Models;
 
 public class BaseEntity
@@ -7,6 +6,6 @@ public class BaseEntity
     public DateTime CreatedAt { get; }
 
     public BaseEntity()
-    { }
-    
+    {
+    }
 }

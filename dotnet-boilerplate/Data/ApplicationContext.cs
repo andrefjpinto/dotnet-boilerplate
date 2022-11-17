@@ -19,13 +19,13 @@ public class ApplicationContext : DbContext
             .Property(x => x.Id)
             .HasDefaultValueSql("uuid_generate_v4()")
             .IsRequired();
-        
+
         modelBuilder
             .Entity<Device>()
             .Property(x => x.CreatedAt)
             .HasDefaultValueSql("NOW()")
             .IsRequired();
     }
-    
+
     public DbSet<Device> Device { get; set; } = default!;
 }

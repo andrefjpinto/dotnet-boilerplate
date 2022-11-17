@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dotnet-boilerplate", "dotnet-boilerplate\dotnet-boilerplate.csproj", "{885D31E3-D08C-4722-892A-11AD90B7C310}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{FDD47469-5D63-4A31-AB5C-43BFDDD35659}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{885D31E3-D08C-4722-892A-11AD90B7C310}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{885D31E3-D08C-4722-892A-11AD90B7C310}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{885D31E3-D08C-4722-892A-11AD90B7C310}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FDD47469-5D63-4A31-AB5C-43BFDDD35659}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDD47469-5D63-4A31-AB5C-43BFDDD35659}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDD47469-5D63-4A31-AB5C-43BFDDD35659}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDD47469-5D63-4A31-AB5C-43BFDDD35659}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

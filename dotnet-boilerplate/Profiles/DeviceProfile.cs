@@ -11,5 +11,6 @@ public class DeviceProfile : Profile
         CreateMap<IEnumerable<Device>?, IEnumerable<Device>?>();
         CreateMap<CreateDeviceViewModel, Device>();
         CreateMap<Device, DeviceViewModel>();
+        CreateMap<DeviceViewModel, Device>();
     }
 }
