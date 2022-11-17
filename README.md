@@ -55,19 +55,19 @@ curl --location --request POST 'https://{url}/api/device' \
 }'
 ```
 
-### Delete Device
+### Delete Device (204 No Content)
 
 ```bash
 curl --location --request DELETE 'https://{url}/api/device/{id}'
 ```
 
-### Get Device by Id
+### Get Device by Id (200 OK)
 
 ```bash
 curl --location --request GET 'https://{url}/api/device/{id}'
 ```
 
-### Update Device
+### Update Device (204 No Content)
 
 ```bash
 curl --location --request PUT 'https://{url}/api/Device/{id}' \
@@ -80,9 +80,9 @@ curl --location --request PUT 'https://{url}/api/Device/{id}' \
 }'
 ```
 
-### Search By Brand
+### Search By Brand (200 OK)
 ```bash
-curl --location --request GET 'https://localhost:7024/api/device/?brand=iPhone'
+curl --location --request GET 'https://{url}/api/device/?brand=iPhone'
 ```
 
 ## Future Considerations
