@@ -1,3 +1,5 @@
+[![.NET](https://github.com/andrefjpinto/dotnet-boilerplate/actions/workflows/dotnet.yml/badge.svg)](https://github.com/andrefjpinto/dotnet-boilerplate/actions/workflows/dotnet.yml)
+
 # .NET Boilerplate
 
 # Table of Contents
@@ -24,7 +26,7 @@ How to run the API?
 dotnet run
 ```
 
-Swaggger: https://{url}/swagger/index.html
+Swaggger: [https://{url}/swagger/index.html](https://{url}/swagger/index.html)
 
 ## Unit Test
 
