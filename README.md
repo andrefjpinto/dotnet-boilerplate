@@ -20,7 +20,26 @@ The boilerplate will also specify the design patterns and access patterns.
 
 The API is developed with .NET 6 and PostgreSQL.
 
-How to run the API? 
+**How to run the API?**
+
+Enable secret storage
+
+```bash
+dotnet user-secrets init --project dotnet-boilerplate
+```
+
+Set Connection string secret
+
+```bash
+dotnet user-secrets set "ConnectionStrings:LocalPostgres" "Host=localhost;Database=postgres;Username=postgres;Password=mysecretpassword" --project dotnet-boilerplate
+```
+
+Run Migrations
+
+```bash
+dotnet ef database update --project dotnet-boilerplate
+```
+
 
 ```bash
 dotnet run

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ApplicationContext>(options =>
-    options.UseNpgsql("Host=localhost;Database=postgres;Username=admin;Password=mysecretpassword"));
+    options.UseNpgsql(builder.Configuration["ConnectionStrings:LocalPostgres"]));
 
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
