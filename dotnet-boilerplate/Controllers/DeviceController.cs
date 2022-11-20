@@ -51,30 +51,36 @@ public class DeviceController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult<DeviceViewModel>> UpdateDevice(Guid id, [FromBody]DeviceViewModel deviceViewModel)
+    public async Task<ActionResult<DeviceViewModel>> UpdateDevice(Guid id, [FromBody]CreateDeviceViewModel deviceViewModel)
     {
-        if(id != deviceViewModel.Id) return BadRequest();
-        _deviceRepository.Update(_mapper.Map<Device>(deviceViewModel));
+        var device = (await _deviceRepository
+                .FindByConditionAsync(device => device.Id.Equals(id)))
+            .FirstOrDefault();
+        if (device == null) return BadRequest();
+        
+        device.Brand = deviceViewModel.Brand;
+        device.Name = deviceViewModel.Name;
+        _deviceRepository.Update(device);
         await _deviceRepository.SaveChangesAsync();
+            
         return NoContent();
     }
 
     [HttpPatch("{id}")]
-    public async Task<IActionResult> PatchDevice(Guid id, JsonPatchDocument<DeviceViewModel> patch)
+    public async Task<IActionResult> PatchDevice(Guid id, JsonPatchDocument<UpdateDeviceViewModel> patch)
     {
         var device = (await _deviceRepository
                 .FindByConditionAsync(device => device.Id.Equals(id)))
             .FirstOrDefault();
         if (device == null) return NotFound();
         
-        var deviceViewModel = _mapper.Map<DeviceViewModel>(device);
-        patch.ApplyTo(deviceViewModel);
+        var devicePatch = _mapper.Map<JsonPatchDocument<Device>>(patch);
+        devicePatch.ApplyTo(device);
         
-        device = _mapper.Map<Device>(deviceViewModel);
         _deviceRepository.Update(device);
         await _deviceRepository.SaveChangesAsync();
 
-        return Ok(deviceViewModel);
+        return Ok();
     }
 
     [HttpPost]
