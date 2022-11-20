@@ -92,11 +92,23 @@ curl --location --request GET 'https://{url}/api/device/{id}'
 curl --location --request PUT 'https://{url}/api/Device/{id}' \
 --header 'Content-Type: application/json-patch+json' \
 --data-raw '{
-    "id": "0d5e7940-fa51-4858-982e-a1aa708a4419",
-    "createdAt": "2022-11-14T22:09:49.48654Z",
-    "name": "Iphone",
-    "brand": "iPhone"
+    "name": "XS MAX",
+    "brand": "Iphone"
 }'
+```
+
+### Update (Partial) Device  (204 No Content)
+
+```bash
+curl --location --request PATCH 'https://{url}/api/device/{id}' \
+--header 'Content-Type: application/json' \
+--data-raw '[
+    {
+        "value": "HTC",
+        "path": "/brand",
+        "op": "replace"
+    }
+]'
 ```
 
 ### Search By Brand (200 OK)
